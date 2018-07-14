@@ -52,7 +52,16 @@ public class DoubleCalculator {
      * Запуск калькулятора.
      */
     public void calculate() {
-        char operation = enterOperation();
+        char operation;
+        while (true) {
+            try {
+                operation = enterOperation();
+                break;
+            } catch (IllegalOperationException e) {
+                e.printStackTrace();
+            }
+        }
+
         double firstValue = enterDoubleValue();
         double secondValue = enterDoubleValue();
         double result = calculate(operation, firstValue, secondValue);
@@ -64,7 +73,7 @@ public class DoubleCalculator {
      *
      * @return символ операции
      */
-    private char enterOperation() {
+    private char enterOperation() throws IllegalOperationException {
         while (true) {
             out.println("Введите операцию, допустимые значения: " + FUNCTIONS.keySet());
             scanner.skip(".*\\n");
@@ -72,7 +81,7 @@ public class DoubleCalculator {
             char operation = next.charAt(0);
             if (FUNCTIONS.containsKey(operation)) {
                 return operation;
-            }
+            } else throw new IllegalOperationException();
         }
     }
 
@@ -99,7 +108,7 @@ public class DoubleCalculator {
      * @param b         второй аргумент операции
      * @return результат выполнения операции
      */
-    private double calculate(char operation, double a, double b) {
+    public static double calculate(char operation, double a, double b) {
         return FUNCTIONS.get(operation).applyAsDouble(a, b);
     }
 }
