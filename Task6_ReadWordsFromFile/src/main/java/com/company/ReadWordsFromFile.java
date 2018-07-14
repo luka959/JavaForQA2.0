@@ -52,6 +52,5 @@ public class ReadWordsFromFile {
             }
             System.out.print("\n" + entry);
         }
-
     }
 }
